@@ -16,7 +16,7 @@ namespace BookingHotelApp.Console
 
             // Авторизация
             Authorization.SignIn(user);
-            
+
             System.Console.ReadLine();
         }
     }
