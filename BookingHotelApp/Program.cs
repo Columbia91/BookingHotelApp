@@ -12,8 +12,8 @@ namespace BookingHotelApp.Console
             var dataService = new AccountsTableDataService();
 
             // Регистрация
-            Registration.SignUp(user, dataService);
-
+            //Registration.SignUp(user, dataService);
+            
             // Авторизация
             Authorization.SignIn(user);
 

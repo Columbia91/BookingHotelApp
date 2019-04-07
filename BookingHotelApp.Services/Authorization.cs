@@ -43,7 +43,7 @@ namespace BookingHotelApp.Services
         {
             Console.Write("Password: ");
             user.Password = HideCharacter();
-            return AccountsTableDataService.CheckForAvailability("Password", user.Password);
+            return AccountsTableDataService.CheckForAvailability("Password", user.Password, user.Login);
         }
         #endregion
 

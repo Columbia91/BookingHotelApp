@@ -10,7 +10,7 @@ namespace BookingHotelApp.DataAccess
         private static readonly string _connectionString;
         static AccountsTableDataService()
         {
-            _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ADILET\Source\Repos\BookingHotelApp2\BookingHotelApp.DataAccess\Database.mdf;Integrated Security=True";
+            _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Nurdaulet\Source\Repos\BookingHotelApp\BookingHotelApp.DataAccess\Database.mdf;Integrated Security=True";
         }
 
         #region Получить коллекцию всех пользователей
@@ -112,7 +112,7 @@ namespace BookingHotelApp.DataAccess
         #endregion
 
         #region Проверка на доступность введенных данных
-        public static bool CheckForAvailability(string property, object data)
+        public static bool CheckForAvailability(string property, object data, string login = "")
         {
             using (var connection = new SqlConnection(_connectionString))
             using (var command = connection.CreateCommand())
@@ -120,12 +120,15 @@ namespace BookingHotelApp.DataAccess
                 try
                 {
                     connection.Open();
-                    command.CommandText = $"Select {property} from Accounts where {property} = '{data}'";
+                    if(property=="Password")
+                        command.CommandText = $"Select Password from Accounts where login = '{login}'";
+                    else
+                        command.CommandText = $"Select {property} from Accounts where {property} = '{data}'";
 
                     if (command.ExecuteScalar() == null)
                         return false;
-                    else if(property == "Password")
-                        if(command.ExecuteScalar().ToString() != data.ToString())
+                    else if (property == "Password")
+                        if (command.ExecuteScalar().ToString() != data.ToString())
                             return false;
                 }
                 catch (SqlException exception)
