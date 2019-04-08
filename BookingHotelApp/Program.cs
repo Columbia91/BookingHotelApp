@@ -26,7 +26,7 @@ namespace BookingHotelApp.Console
                 else if (choice == 2)
                 {
                     Authorization.SignIn(user);
-                    System.Console.ReadLine();
+                    
                     List<Hotel> hotels = HotelsTableDataService.GetAllHotels();
                     for (int i = 0; i < hotels.Count; i++)
                     {
@@ -36,12 +36,16 @@ namespace BookingHotelApp.Console
                     choice = int.Parse(System.Console.ReadLine());
 
                     List<Room> rooms = RoomsTableDataService.GetAvailableRooms(hotels[choice - 1].Id);
-                    System.Console.WriteLine("{0,5} | {1,15} | {2,10}", "№", "Category","Price");
+                    System.Console.WriteLine("{0,7} | {1,15} | {2,10}", "№", "Category","Price");
 
                     for (int i = 0; i < rooms.Count; i++)
                     {
+                        System.Console.Write($"{i+1}) ");
                         rooms[i].Show(i+1);
                     }
+                    System.Console.Write("Please, make your choice: ");
+                    choice = int.Parse(System.Console.ReadLine());
+                    
                     System.Console.ReadLine();
                 }
                 else

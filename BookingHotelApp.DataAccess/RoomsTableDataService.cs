@@ -16,7 +16,7 @@ namespace BookingHotelApp.DataAccess
             _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ADILET\Desktop\BookingHotelApp\BookingHotelApp.DataAccess\Database.mdf;Integrated Security=True";
         }
 
-        #region Получить коллекцию всех пользователей
+        #region Получить коллекцию свободных комнат
         public static List<Room> GetAvailableRooms(int hotelId)
         {
             var data = new List<Room>(); //буферный список пользователей
@@ -63,6 +63,42 @@ namespace BookingHotelApp.DataAccess
                 {
                     //TODO обработка ошибки
                     throw;
+                }
+            }
+            return data;
+        }
+        #endregion
+
+        #region Узнать стоимость комнаты
+        public static object GetRoomPrice(int id)
+        {
+            object data = 0;
+
+            using (var connection = new SqlConnection(_connectionString))
+            using (var command = connection.CreateCommand())
+            {
+                try
+                {
+                    connection.Open();
+                    command.CommandText = $"SELECT price from Rooms where Id = {id}";
+
+                    if (command.ExecuteScalar() == null)
+                        return data;
+                    else
+                        data = command.ExecuteScalar();
+                }
+                catch (SqlException exception)
+                {
+                    Console.WriteLine(exception.Message);
+                    //TODO обработка ошибки
+                    //throw;
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception.Message);
+                    //TODO обработка ошибки
+                    //throw;
+                    Console.ReadLine();
                 }
             }
             return data;
