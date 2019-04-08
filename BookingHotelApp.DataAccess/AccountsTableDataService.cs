@@ -10,7 +10,7 @@ namespace BookingHotelApp.DataAccess
         private static readonly string _connectionString;
         static AccountsTableDataService()
         {
-            _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Nurdaulet\Source\Repos\BookingHotelApp\BookingHotelApp.DataAccess\Database.mdf;Integrated Security=True";
+            _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ADILET\Desktop\BookingHotelApp\BookingHotelApp.DataAccess\Database.mdf;Integrated Security=True";
         }
 
         #region Получить коллекцию всех пользователей

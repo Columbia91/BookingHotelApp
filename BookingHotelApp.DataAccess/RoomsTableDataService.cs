@@ -13,7 +13,7 @@ namespace BookingHotelApp.DataAccess
         private static readonly string _connectionString;
         static RoomsTableDataService()
         {
-            _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Nurdaulet\Source\Repos\BookingHotelApp\BookingHotelApp.DataAccess\Database.mdf;Integrated Security=True";
+            _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ADILET\Desktop\BookingHotelApp\BookingHotelApp.DataAccess\Database.mdf;Integrated Security=True";
         }
 
         #region Получить коллекцию всех пользователей
@@ -27,9 +27,9 @@ namespace BookingHotelApp.DataAccess
                 try
                 {
                     connection.Open();
-                    command.CommandText = $"SELECT id, number, category, price, status " +
-                        $"FROM Rooms r " +
-                        $"where status = available and hotel_id = {hotelId}";
+                    command.CommandText = $"SELECT r.id, r.number, r.category, h.name, r.price, r.status FROM Rooms r " +
+                        $"join Hotels h on r.hotel_id = h.id " +
+                        $"where r.hotel_id = {hotelId} and r.status = 'available'";
 
                     var sqlDataReader = command.ExecuteReader();
 
@@ -39,7 +39,7 @@ namespace BookingHotelApp.DataAccess
                         int number = (int)sqlDataReader["Number"];
                         string category = sqlDataReader["Category"].ToString();
                         string name = sqlDataReader["Name"].ToString();
-                        double price = (double)sqlDataReader["Price"];
+                        object price = sqlDataReader["Price"];
                         string status = sqlDataReader["Status"].ToString();
 
                         data.Add(new Room

@@ -35,13 +35,14 @@ namespace BookingHotelApp.Console
                     System.Console.Write("Choice: ");
                     choice = int.Parse(System.Console.ReadLine());
 
-                    List<Room> rooms = RoomsTableDataService.GetAvailableRooms(hotels[choice].Id);
+                    List<Room> rooms = RoomsTableDataService.GetAvailableRooms(hotels[choice - 1].Id);
                     System.Console.WriteLine("{0,5} | {1,15} | {2,10}", "№", "Category","Price");
 
                     for (int i = 0; i < rooms.Count; i++)
                     {
                         rooms[i].Show(i+1);
                     }
+                    System.Console.ReadLine();
                 }
                 else
                     System.Environment.Exit(0);
