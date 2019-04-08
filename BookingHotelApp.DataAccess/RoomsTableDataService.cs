@@ -39,7 +39,7 @@ namespace BookingHotelApp.DataAccess
                         int number = (int)sqlDataReader["Number"];
                         string category = sqlDataReader["Category"].ToString();
                         string name = sqlDataReader["Name"].ToString();
-                        object price = sqlDataReader["Price"];
+                        double price = (double)sqlDataReader["Price"];
                         string status = sqlDataReader["Status"].ToString();
 
                         data.Add(new Room
@@ -70,9 +70,9 @@ namespace BookingHotelApp.DataAccess
         #endregion
 
         #region Узнать стоимость комнаты
-        public static object GetRoomPrice(int id)
+        public static double GetRoomPrice(int id)
         {
-            object data = 0;
+            double data = 0;
 
             using (var connection = new SqlConnection(_connectionString))
             using (var command = connection.CreateCommand())
@@ -85,7 +85,7 @@ namespace BookingHotelApp.DataAccess
                     if (command.ExecuteScalar() == null)
                         return data;
                     else
-                        data = command.ExecuteScalar();
+                        data = (double)command.ExecuteScalar();
                 }
                 catch (SqlException exception)
                 {

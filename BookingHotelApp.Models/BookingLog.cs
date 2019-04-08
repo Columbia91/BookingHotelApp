@@ -14,6 +14,6 @@ namespace BookingHotelApp.Models
         public string HotelName { get; set; }
         public DateTime ArrivalDate { get; set; }
         public DateTime DepartureDate { get; set; }
-        public object Payment { get; set; }
+        public double Payment { get; set; }
     }
 }

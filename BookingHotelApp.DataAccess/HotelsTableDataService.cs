@@ -58,5 +58,38 @@ namespace BookingHotelApp.DataAccess
             return data;
         }
         #endregion
+
+        #region Получить коллекцию всех отелей
+        public static int GetHotelId(string hotelName)
+        {
+            int data = 0; //буферный список пользователей
+
+            using (var connection = new SqlConnection(_connectionString))
+            using (var command = connection.CreateCommand())
+            {
+                try
+                {
+                    connection.Open();
+                    command.CommandText = $"SELECT id FROM Hotels where name = '{hotelName}'";
+
+                    if (command.ExecuteScalar() == null)
+                        return data;
+                    else
+                        data = (int)command.ExecuteScalar();
+                }
+                catch (SqlException exception)
+                {
+                    //TODO обработка ошибки
+                    throw;
+                }
+                catch (Exception exception)
+                {
+                    //TODO обработка ошибки
+                    throw;
+                }
+            }
+            return data;
+        }
+        #endregion
     }
 }

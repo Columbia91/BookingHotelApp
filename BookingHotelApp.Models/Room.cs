@@ -12,7 +12,7 @@ namespace BookingHotelApp.Models
         public int Number { get; set; }
         public string Category { get; set; }
         public string HotelName { get; set; }
-        public object Price { get; set; }
+        public double Price { get; set; }
         public string Status { get; set; }
 
         public void Show(int number)

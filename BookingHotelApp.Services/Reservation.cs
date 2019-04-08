@@ -10,9 +10,12 @@ namespace BookingHotelApp.Services
 {
     public class Reservation
     {
-        public static void BookingNumber(Room room)
+        public static void BookingNumber(BookingLog note, Room room, User user, Hotel hotel)
         {
-            BookingLog note = new BookingLog();
+            //note.RoomNumber = room.Number;
+            //note.GuestName = user.Login;
+            //note.HotelName = hotel.Name;
+            user.Id = AccountsTableDataService.GetAccountId(user.Login);
 
             Console.Write("Please ender data:\n" +
                 "ArrivalDate (dd.mm.yyyy): ");
@@ -21,7 +24,15 @@ namespace BookingHotelApp.Services
             Console.Write("DepartureDate (dd.mm.yyyy): ");
             note.DepartureDate = DateTime.Parse(Console.ReadLine());
 
-            note.Payment = (note.DepartureDate - note.ArrivalDate).TotalDays * (int)RoomsTableDataService.GetRoomPrice(room.Id);
+            Console.WriteLine("\n1) To book \n2) To Pay");
+            int choice = int.Parse(Console.ReadLine());
+
+            if (choice == 1)
+                note.Payment = 0;
+            else if(choice == 2)
+                note.Payment = (note.DepartureDate - note.ArrivalDate).TotalDays * RoomsTableDataService.GetRoomPrice(room.Id);
+
+            BookingLogTableDataService.AddNote(note, room.Id, user.Id, hotel.Id);
         }
     }
 }

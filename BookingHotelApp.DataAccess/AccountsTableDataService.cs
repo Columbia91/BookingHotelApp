@@ -62,6 +62,39 @@ namespace BookingHotelApp.DataAccess
         }
         #endregion
 
+        #region Получить Id пользователя
+        public static int GetAccountId(string login)
+        {
+            int data = 0; //буферный список пользователей
+
+            using (var connection = new SqlConnection(_connectionString))
+            using (var command = connection.CreateCommand())
+            {
+                try
+                {
+                    connection.Open();
+                    command.CommandText = $"SELECT Id FROM Accounts where login = '{login}'";
+
+                    if (command.ExecuteScalar() == null)
+                        return data;
+                    else
+                        data = (int)command.ExecuteScalar();
+                }
+                catch (SqlException exception)
+                {
+                    //TODO обработка ошибки
+                    throw;
+                }
+                catch (Exception exception)
+                {
+                    //TODO обработка ошибки
+                    throw;
+                }
+            }
+            return data;
+        }
+        #endregion
+
         #region Добавление пользователя в базу данных
         public void AddUser(User user)
         {

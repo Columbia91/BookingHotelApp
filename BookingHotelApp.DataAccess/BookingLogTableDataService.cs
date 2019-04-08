@@ -15,15 +15,9 @@ namespace BookingHotelApp.DataAccess
         {
             _connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\ADILET\Desktop\BookingHotelApp\BookingHotelApp.DataAccess\Database.mdf;Integrated Security=True";
         }
-
-        #region Стоимость бронирования
-        public static object GetRentPrice(int days)
-        {
-
-        }
-        #endregion
+        
         #region Добавление пользователя в базу данных
-        public void AddNote(BookingLog note)
+        public static void AddNote(BookingLog note, int roomId, int guestId, int hotelId)
         {
             using (var connection = new SqlConnection(_connectionString))
             using (var command = connection.CreateCommand())
@@ -31,8 +25,8 @@ namespace BookingHotelApp.DataAccess
                 try
                 {
                     connection.Open();
-                    command.CommandText = $"INSERT into BookingLog values ('{note.RoomNumber}','{note.GuestName}'," +
-                        $"'{note.HotelName}','{note.ArrivalDate}','{note.ArrivalDate}','{note.DepartureDate}','{note.Payment}')";
+                    command.CommandText = $"INSERT into BookingLog values ('{roomId}','{guestId}'," +
+                        $"'{hotelId}','{note.ArrivalDate}','{note.DepartureDate}','{note.Payment}')";
                     
                     var affectedRows = command.ExecuteNonQuery(); //число строк которые подвергнуты каким либо изменениям 
 

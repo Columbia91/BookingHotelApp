@@ -33,9 +33,9 @@ namespace BookingHotelApp.Console
                         System.Console.WriteLine($"{i+1}) {hotels[i].Name}");
                     }
                     System.Console.Write("Choice: ");
-                    choice = int.Parse(System.Console.ReadLine());
+                    int hotelPosition = int.Parse(System.Console.ReadLine());
 
-                    List<Room> rooms = RoomsTableDataService.GetAvailableRooms(hotels[choice - 1].Id);
+                    List<Room> rooms = RoomsTableDataService.GetAvailableRooms(hotels[hotelPosition - 1].Id);
                     System.Console.WriteLine("{0,7} | {1,15} | {2,10}", "№", "Category","Price");
 
                     for (int i = 0; i < rooms.Count; i++)
@@ -44,8 +44,11 @@ namespace BookingHotelApp.Console
                         rooms[i].Show(i+1);
                     }
                     System.Console.Write("Please, make your choice: ");
-                    choice = int.Parse(System.Console.ReadLine());
+                    int roomPosition = int.Parse(System.Console.ReadLine());
+
+                    BookingLog note = new BookingLog();
                     
+                    Reservation.BookingNumber(note, rooms[roomPosition - 1], user, hotels[hotelPosition - 1]);
                     System.Console.ReadLine();
                 }
                 else
